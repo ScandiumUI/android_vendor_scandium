@@ -1,0 +1,17 @@
+// Copyright (C) 2024-2026 The ScandiumUI Project
+// SPDX-License-Identifier: Apache-2.0
+
+service scandiumd /vendor/bin/scandiumd
+    class main
+    user root
+    group root system
+    capabilities SYS_NICE NET_ADMIN
+    writepid /dev/cpuset/system-background/tasks
+    oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start scandiumd
+
+on property:persist.scandium.perf.level=*
+    restart scandiumd

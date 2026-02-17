@@ -1,0 +1,31 @@
+// Copyright (C) 2024-2026 The ScandiumUI Project
+// SPDX-License-Identifier: Apache-2.0
+
+cc_binary {
+    name: "scandiumd",
+    srcs: [
+        "src/main.cpp",
+        "src/ScandiumPerfd.cpp",
+        "src/CpuTuner.cpp",
+        "src/GpuTuner.cpp",
+        "src/MemoryTuner.cpp",
+        "src/IoTuner.cpp",
+        "src/GpuSpoof.cpp",
+        "src/ThermalMonitor.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "libcutils",
+        "libutils",
+    ],
+    local_include_dirs: ["include"],
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-DLOG_TAG=\"scandiumd\"",
+    ],
+    init_rc: ["scandiumd.rc"],
+    vendor: true,
+}
