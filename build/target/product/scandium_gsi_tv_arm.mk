@@ -13,12 +13,12 @@
 # limitations under the License.
 
 $(call inherit-product, build/target/product/gsi_release.mk)
-$(call inherit-product, device/google/atv/products/aosp_tv_arm64.mk)
+$(call inherit-product, device/google/atv/products/aosp_tv_arm.mk)
 
-include vendor/lineage/build/target/product/lineage_generic_tv_target.mk
+include vendor/scandium/build/target/product/scandium_generic_tv_target.mk
 
 TARGET_NO_KERNEL_OVERRIDE := true
 
-PRODUCT_NAME := lineage_gsi_tv_arm64
+PRODUCT_NAME := scandium_gsi_tv_arm
 
 PRODUCT_ENFORCE_ARTIFACT_PATH_REQUIREMENTS :=

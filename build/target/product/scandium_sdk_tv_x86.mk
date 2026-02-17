@@ -12,15 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, device/generic/car/gsi_car_arm64.mk)
+include vendor/scandium/build/target/product/scandium_generic_tv_target.mk
 
-include vendor/lineage/build/target/product/lineage_generic_car_target.mk
+$(call inherit-product, device/google/atv/products/sdk_atv_x86.mk)
 
-PRODUCT_USE_DYNAMIC_PARTITION_SIZE := true
-
+TARGET_KERNEL_USE := 6.1
 TARGET_NO_KERNEL_OVERRIDE := true
 
 # Enable mainline checking
 PRODUCT_ENFORCE_ARTIFACT_PATH_REQUIREMENTS := relaxed
 
-PRODUCT_NAME := lineage_gsi_car_arm64
+# Overrides
+PRODUCT_NAME := scandium_sdk_tv_x86
+PRODUCT_MODEL := ScandiumUI Android TV SDK built for x86
+
+PRODUCT_SDK_ADDON_NAME := scandium
+PRODUCT_SDK_ADDON_SYS_IMG_SOURCE_PROP := $(LOCAL_PATH)/source.properties
