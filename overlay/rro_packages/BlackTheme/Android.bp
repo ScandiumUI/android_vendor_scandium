@@ -4,8 +4,8 @@
 //
 
 runtime_resource_overlay {
-    name: "LineageBlackTheme",
+    name: "ScandiumBlackTheme",
 
-    theme: "LineageBlackTheme",
+    theme: "ScandiumBlackTheme",
     product_specific: true,
 }
