@@ -338,7 +338,7 @@ def:default_left_nav() ?>
             </select>
           </div>
         </div><!-- end toggle -->
-        <div id="api-nav-title">LineageOS APIs</div>
+        <div id="api-nav-title">ScandiumUI APIs</div>
         </div><!-- end nav header -->
       <script>
         var SINCE_DATA = [ <?cs 
