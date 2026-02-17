@@ -70,3 +70,11 @@ PRODUCT_PRODUCT_PROPERTIES += \
     persist.scandium.feature.gallery=true \
     persist.scandium.feature.extra_tools=false \
     persist.scandium.perf.level=efficient
+
+PRODUCT_PACKAGES += scandiumd
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.scandium.gpu.spoof.enabled=false \
+    persist.scandium.gpu.msaa=0 \
+    persist.scandium.gpu.texture_quality=default \
+    persist.scandium.gpu.vulkan=default \
+    debug.hwui.renderer=skiagl

@@ -81,3 +81,14 @@ PRODUCT_PRODUCT_PROPERTIES += \
     persist.scandium.feature.gallery=true \
     persist.scandium.feature.extra_tools=false \
     persist.scandium.perf.level=balanced
+
+PRODUCT_PACKAGES += scandiumd
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.scandium.gpu.spoof.enabled=true \
+    persist.scandium.gpu.spoof.renderer=Adreno\ (TM)\ 730 \
+    persist.scandium.gpu.spoof.vendor=Qualcomm \
+    persist.scandium.gpu.msaa=2 \
+    persist.scandium.gpu.texture_quality=high \
+    persist.scandium.gpu.vulkan=auto \
+    debug.hwui.renderer=skiavk \
+    ro.opengles.version=196609
