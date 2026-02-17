@@ -1,45 +1,57 @@
 PRODUCT_VERSION_MAJOR = 23
 PRODUCT_VERSION_MINOR = 2
 
-ifeq ($(LINEAGE_VERSION_APPEND_TIME_OF_DAY),true)
-    LINEAGE_BUILD_DATE := $(shell date -u +%Y%m%d_%H%M%S)
+# Edition: Professional (Sc₂O₃) | Casual (Sc) [default] | Academy (ScF₃)
+SCANDIUM_EDITION ?= Casual
+
+ifeq ($(SCANDIUM_EDITION),Professional)
+    SCANDIUM_EDITION_CODENAME := Sc2O3
+else ifeq ($(SCANDIUM_EDITION),Academy)
+    SCANDIUM_EDITION_CODENAME := ScF3
 else
-    LINEAGE_BUILD_DATE := $(shell date -u +%Y%m%d)
+    override SCANDIUM_EDITION := Casual
+    SCANDIUM_EDITION_CODENAME := Sc
 endif
 
-# Set LINEAGE_BUILDTYPE from the env RELEASE_TYPE, for jenkins compat
+SCANDIUM_EDITION_LOWER := $(shell echo $(SCANDIUM_EDITION) | tr 'A-Z' 'a-z')
 
-ifndef LINEAGE_BUILDTYPE
+ifeq ($(SCANDIUM_VERSION_APPEND_TIME_OF_DAY),true)
+    SCANDIUM_BUILD_DATE := $(shell date -u +%Y%m%d_%H%M%S)
+else
+    SCANDIUM_BUILD_DATE := $(shell date -u +%Y%m%d)
+endif
+
+SCANDIUM_BUILD_TIMESTAMP := $(shell date -u +%s)
+
+ifndef SCANDIUM_BUILDTYPE
     ifdef RELEASE_TYPE
-        # Starting with "LINEAGE_" is optional
-        RELEASE_TYPE := $(shell echo $(RELEASE_TYPE) | sed -e 's|^LINEAGE_||g')
-        LINEAGE_BUILDTYPE := $(RELEASE_TYPE)
+        SCANDIUM_BUILDTYPE := $(shell echo $(RELEASE_TYPE) | sed -e 's|^SCANDIUM_||g')
     endif
 endif
 
-# Filter out random types, so it'll reset to UNOFFICIAL
-ifeq ($(filter RELEASE NIGHTLY SNAPSHOT EXPERIMENTAL,$(LINEAGE_BUILDTYPE)),)
-    LINEAGE_BUILDTYPE := UNOFFICIAL
-    LINEAGE_EXTRAVERSION :=
+ifeq ($(filter COOKIE SNAPSHOT EXPERIMENTAL,$(SCANDIUM_BUILDTYPE)),)
+    SCANDIUM_BUILDTYPE := COOKIE
+    SCANDIUM_EXTRAVERSION :=
 endif
 
-ifeq ($(LINEAGE_BUILDTYPE), UNOFFICIAL)
+ifeq ($(SCANDIUM_BUILDTYPE), COOKIE)
     ifneq ($(TARGET_UNOFFICIAL_BUILD_ID),)
-        LINEAGE_EXTRAVERSION := -$(TARGET_UNOFFICIAL_BUILD_ID)
+        SCANDIUM_EXTRAVERSION := -$(TARGET_UNOFFICIAL_BUILD_ID)
     endif
 endif
 
-LINEAGE_VERSION_SUFFIX := $(LINEAGE_BUILD_DATE)-$(LINEAGE_BUILDTYPE)$(LINEAGE_EXTRAVERSION)-$(LINEAGE_BUILD)
+SCANDIUM_VERSION_SUFFIX := $(SCANDIUM_BUILD_DATE)-$(SCANDIUM_BUILDTYPE)$(SCANDIUM_EXTRAVERSION)-$(SCANDIUM_BUILD)
+SCANDIUM_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(SCANDIUM_VERSION_SUFFIX)
+SCANDIUM_DISPLAY_VERSION := ScandiumUI $(PRODUCT_VERSION_MAJOR) $(SCANDIUM_EDITION) — $(SCANDIUM_VERSION_SUFFIX)
+SCANDIUM_FINGERPRINT := scandiumui/$(SCANDIUM_EDITION_LOWER)/$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)/$(SCANDIUM_BUILD_DATE)/$(SCANDIUM_BUILDTYPE)
 
-# Internal version
-LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(LINEAGE_VERSION_SUFFIX)
-
-# Display version
-LINEAGE_DISPLAY_VERSION := $(PRODUCT_VERSION_MAJOR)-$(LINEAGE_VERSION_SUFFIX)
-
-# LineageOS version properties
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.lineage.version=$(LINEAGE_VERSION) \
-    ro.lineage.display.version=$(LINEAGE_DISPLAY_VERSION) \
-    ro.lineage.build.version=$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR) \
-    ro.lineage.releasetype=$(LINEAGE_BUILDTYPE)
+    ro.scandium.version=$(SCANDIUM_VERSION) \
+    ro.scandium.display.version=$(SCANDIUM_DISPLAY_VERSION) \
+    ro.scandium.build.version=$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR) \
+    ro.scandium.releasetype=$(SCANDIUM_BUILDTYPE) \
+    ro.scandium.edition=$(SCANDIUM_EDITION_LOWER) \
+    ro.scandium.edition.codename=$(SCANDIUM_EDITION_CODENAME) \
+    ro.scandium.build.date=$(SCANDIUM_BUILD_DATE) \
+    ro.scandium.build.timestamp=$(SCANDIUM_BUILD_TIMESTAMP) \
+    ro.scandium.fingerprint=$(SCANDIUM_FINGERPRINT)
