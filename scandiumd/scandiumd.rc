@@ -4,10 +4,9 @@
 service scandiumd /vendor/bin/scandiumd
     class main
     user root
-    group root system
-    capabilities SYS_NICE NET_ADMIN
+    group root system readproc net_admin net_raw
+    capabilities SYS_NICE NET_ADMIN SYS_PTRACE SYS_ADMIN DAC_OVERRIDE DAC_READ_SEARCH KILL
     writepid /dev/cpuset/system-background/tasks
-    oneshot
     disabled
 
 on property:sys.boot_completed=1
@@ -15,3 +14,9 @@ on property:sys.boot_completed=1
 
 on property:persist.scandium.perf.level=*
     restart scandiumd
+
+on property:persist.scandium.daemon.mode=*
+    setprop persist.scandium.daemon.mode_ts ${ro.boottime.init}
+
+on property:persist.scandium.daemon.persistent=false
+    stop scandiumd
