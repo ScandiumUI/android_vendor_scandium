@@ -1,71 +1,44 @@
-# Inherit common mobile Lineage stuff
-$(call inherit-product, vendor/lineage/config/common.mk)
+$(call inherit-product, vendor/scandium/config/common.mk)
 
-ifeq ($(LINEAGE_BUILD),true)
-# Include AOSP audio files
+ifeq ($(SCANDIUM_BUILD),true)
 $(call inherit-product-if-exists, frameworks/base/data/sounds/AudioPackage14.mk)
-include vendor/lineage/config/aosp_audio.mk
+include vendor/scandium/config/aosp_audio.mk
 
-# Include Lineage audio files
-include vendor/lineage/config/lineage_audio.mk
-
-# Default notification/alarm sounds
+include vendor/scandium/config/scandium_audio.mk
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.config.notification_sound=Argon.ogg \
     ro.config.alarm_alert=Hassium.ogg
 endif
 
-# Apps
+# Apps — edition-specific apps (Backgrounds, Glimpse, etc)
+# config/editions/{professional,academy,casual}.mk
 PRODUCT_PACKAGES += \
     AvatarPicker \
     LatinIME
 
-ifeq ($(LINEAGE_BUILD),true)
-PRODUCT_PACKAGES += \
-    Backgrounds \
-    Glimpse
-endif
-
-ifeq ($(PRODUCT_TYPE), go)
-PRODUCT_PACKAGES += \
-    Launcher3QuickStepGo
-
-PRODUCT_DEXPREOPT_SPEED_APPS += \
-    Launcher3QuickStepGo
-else
-PRODUCT_PACKAGES += \
-    Launcher3QuickStep
-
-PRODUCT_DEXPREOPT_SPEED_APPS += \
-    Launcher3QuickStep
-endif
-
+# Launcher is now managed by edition configs
+# See config/editions/{professional,academy,casual}.mk
 PRODUCT_PACKAGES += \
     Launcher3Overlay
 
-# Charger
 PRODUCT_PACKAGES += \
     charger_res_images
 
-ifneq ($(WITH_LINEAGE_CHARGER),false)
+ifneq ($(WITH_SCANDIUM_CHARGER),false)
 PRODUCT_PACKAGES += \
-    lineage_charger_animation \
-    lineage_charger_animation_vendor
+    scandium_charger_animation \
+    scandium_charger_animation_vendor
 endif
 
-# Legal
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.lineagelegal.url=https://lineageos.org/legal
+    ro.scandium.legal.url=https://scandiumui.tech/legal
 
-# Media
 PRODUCT_PRODUCT_PROPERTIES += \
     media.recorder.show_manufacturer_and_model=true
 
-# SystemUI plugins
 PRODUCT_PACKAGES += \
     QuickAccessWallet
 
-# TextClassifier
 PRODUCT_PACKAGES += \
     libtextclassifier_annotator_en_model \
     libtextclassifier_annotator_universal_model \
@@ -78,8 +51,5 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
     system/etc/textclassifier/textclassifier.en.model \
     system/etc/textclassifier/textclassifier.universal.model
 
-# Themes
-PRODUCT_PACKAGES += \
-    LineageBlackTheme \
-    ThemePicker \
-    ThemesStub
+# Themes are now managed by edition configs
+# See config/editions/{professional,academy,casual}.mk

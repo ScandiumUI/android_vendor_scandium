@@ -1,51 +1,14 @@
-# Inherit common Lineage stuff
-$(call inherit-product, vendor/lineage/config/common_mobile.mk)
+# Inherit common ScandiumUI stuff
+$(call inherit-product, vendor/scandium/config/common_mobile.mk)
 
 PRODUCT_SIZE := full
 
-# Include {GoogleSansFlex,Lato,Rubik} fonts
-ifeq ($(LINEAGE_BUILD),true)
-$(call inherit-product-if-exists, external/google-fonts/google-sans-flex/fonts.mk)
-$(call inherit-product-if-exists, external/google-fonts/lato/fonts.mk)
-$(call inherit-product-if-exists, external/google-fonts/rubik/fonts.mk)
+# Include ScandiumUI edition-specific configuration
+# Edition is resolved in version.mk (Professional, Academy, Casual)
+ifeq ($(SCANDIUM_BUILD),true)
+$(call inherit-product-if-exists, vendor/scandium/config/editions/$(SCANDIUM_EDITION_LOWER).mk)
 endif
 
-# Apps
-ifeq ($(LINEAGE_BUILD),true)
-PRODUCT_PACKAGES += \
-    Camelot \
-    Etar \
-    Profiles \
-    Recorder \
-    Twelve
-endif
-
-ifneq ($(PRODUCT_NO_CAMERA),true)
-PRODUCT_PACKAGES += \
-    Aperture
-endif
-
-ifeq ($(LINEAGE_BUILD),true)
-ifneq ($(TARGET_EXCLUDES_AUDIOFX),true)
-PRODUCT_PACKAGES += \
-    AudioFX
-endif
-endif
-
-# Extra cmdline tools
-PRODUCT_PACKAGES += \
-    unrar \
-    zstd
-
-# Fonts
-ifeq ($(LINEAGE_BUILD),true)
-PRODUCT_PACKAGES += \
-    fonts_customization.xml \
-    FontGoogleSansFlexOverlay \
-    FontLatoOverlay \
-    FontRubikOverlay
-endif
-
-# Include Lineage LatinIME dictionaries
-PRODUCT_PACKAGE_OVERLAYS += vendor/lineage/overlay/dictionaries
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/lineage/overlay/dictionaries
+# Include ScandiumUI LatinIME dictionaries
+PRODUCT_PACKAGE_OVERLAYS += vendor/scandium/overlay/dictionaries
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/scandium/overlay/dictionaries

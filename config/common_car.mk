@@ -1,5 +1,4 @@
-# Inherit common Lineage stuff
-$(call inherit-product, vendor/lineage/config/common.mk)
+# Inherit common ScandiumUI stuff
+$(call inherit-product, vendor/scandium/config/common.mk)
 
-# Inherit Lineage car device tree
-$(call inherit-product, device/lineage/car/lineage_car.mk)
+$(call inherit-product, device/scandium/car/scandium_car.mk)

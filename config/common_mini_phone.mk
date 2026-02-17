@@ -1,4 +1,4 @@
-# Inherit mobile mini common Lineage stuff
-$(call inherit-product, vendor/lineage/config/common_mobile_mini.mk)
+# Inherit mobile mini common ScandiumUI stuff
+$(call inherit-product, vendor/scandium/config/common_mobile_mini.mk)
 
-$(call inherit-product, vendor/lineage/config/telephony.mk)
+$(call inherit-product, vendor/scandium/config/telephony.mk)
