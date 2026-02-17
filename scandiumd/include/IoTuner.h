@@ -9,11 +9,14 @@ namespace scandium {
 
 class IoTuner {
 public:
-    static void apply(const PerfProfile& profile);
+    static void apply(const IoProfile& profile);
 
 private:
-    static void tune_block_device(const char* device, const PerfProfile& profile);
-    static void find_and_tune_devices(const PerfProfile& profile);
+    static void tune_block_device(const char* device, const IoProfile& profile);
+    static void find_and_tune_devices(const IoProfile& profile);
+    static void tune_dm_devices(const IoProfile& profile);
+    static void tune_loop_devices(const IoProfile& profile);
+    static const char* scheduler_to_string(int sched);
 };
 
 } // namespace scandium
