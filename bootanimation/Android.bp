@@ -18,10 +18,10 @@ genrule {
     ],
     out: ["bootanimation.zip"],
 
-    cmd: select((soong_config_variable("lineage_bootanimation", "height"),
-                 soong_config_variable("lineage_bootanimation", "width"),
-                 soong_config_variable("lineage_bootanimation", "half_res"),
-                 soong_config_variable("lineage_bootanimation", "prebuilt_file")), {
+    cmd: select((soong_config_variable("scandium_bootanimation", "height"),
+                 soong_config_variable("scandium_bootanimation", "width"),
+                 soong_config_variable("scandium_bootanimation", "half_res"),
+                 soong_config_variable("scandium_bootanimation", "prebuilt_file")), {
         (any @ height, any @ width, any @ half_res, any @ prebuilt_file):
             "cp ../../../../../" + prebuilt_file + " $(out)",
         (any @ height, any @ width, any @ half_res, default):
